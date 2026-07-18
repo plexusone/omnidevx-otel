@@ -1,0 +1,11 @@
+apiVersion: 1
+
+datasources:
+  - name: OmniDevX
+    uid: omnidevx-infinity
+    type: yesoreyeram-infinity-datasource
+    access: proxy
+    isDefault: true
+    jsonData:
+      allowedHosts:
+        - http://127.0.0.1:4318

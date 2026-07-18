@@ -1,0 +1,10 @@
+apiVersion: 1
+
+providers:
+  - name: omnidevx
+    folder: OmniDevX
+    type: file
+    allowUiUpdates: true
+    options:
+      # Set to this repository's grafana/dashboards directory (absolute path).
+      path: /path/to/omnidevx-otel/grafana/dashboards

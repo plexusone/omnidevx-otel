@@ -1,0 +1,98 @@
+{
+  "uid": "omnidevx-main",
+  "title": "OmniDevX — AI Development Telemetry",
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "refresh": "1m",
+  "time": { "from": "now-30d", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Tokens per day",
+      "type": "timeseries",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 0 },
+      "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "omnidevx-infinity" },
+      "fieldConfig": { "defaults": { "custom": { "drawStyle": "bars", "stacking": { "mode": "normal" }, "fillOpacity": 60 } }, "overrides": [] },
+      "targets": [{
+        "refId": "A",
+        "type": "json",
+        "source": "url",
+        "parser": "backend",
+        "format": "timeseries",
+        "url": "http://127.0.0.1:4318/api/series?metric=tokens&bucket=day&since=${__from:date:iso}&until=${__to:date:iso}",
+        "root_selector": "rows",
+        "columns": [
+          { "selector": "t", "text": "time", "type": "timestamp" },
+          { "selector": "input", "text": "input", "type": "number" },
+          { "selector": "output", "text": "output", "type": "number" },
+          { "selector": "cache_creation", "text": "cache_creation", "type": "number" }
+        ]
+      }]
+    },
+    {
+      "id": 2,
+      "title": "Cost per day (USD, OTel-observed)",
+      "type": "timeseries",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 0 },
+      "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "omnidevx-infinity" },
+      "fieldConfig": { "defaults": { "custom": { "drawStyle": "bars", "fillOpacity": 60 }, "unit": "currencyUSD" }, "overrides": [] },
+      "targets": [{
+        "refId": "A",
+        "type": "json",
+        "source": "url",
+        "parser": "backend",
+        "format": "timeseries",
+        "url": "http://127.0.0.1:4318/api/series?metric=cost&bucket=day&since=${__from:date:iso}&until=${__to:date:iso}",
+        "root_selector": "rows",
+        "columns": [
+          { "selector": "t", "text": "time", "type": "timestamp" },
+          { "selector": "cost_usd", "text": "cost", "type": "number" }
+        ]
+      }]
+    },
+    {
+      "id": 3,
+      "title": "Sessions / prompts / tool calls per day",
+      "type": "timeseries",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 9 },
+      "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "omnidevx-infinity" },
+      "fieldConfig": { "defaults": { "custom": { "drawStyle": "line", "fillOpacity": 10 } }, "overrides": [] },
+      "targets": [{
+        "refId": "A",
+        "type": "json",
+        "source": "url",
+        "parser": "backend",
+        "format": "timeseries",
+        "url": "http://127.0.0.1:4318/api/series?metric=activity&bucket=day&since=${__from:date:iso}&until=${__to:date:iso}",
+        "root_selector": "rows",
+        "columns": [
+          { "selector": "t", "text": "time", "type": "timestamp" },
+          { "selector": "sessions", "text": "sessions", "type": "number" },
+          { "selector": "prompts", "text": "prompts", "type": "number" },
+          { "selector": "tool_calls", "text": "tool_calls", "type": "number" }
+        ]
+      }]
+    },
+    {
+      "id": 4,
+      "title": "AI-assisted commit share (weekly)",
+      "type": "timeseries",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 9 },
+      "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "omnidevx-infinity" },
+      "fieldConfig": { "defaults": { "custom": { "drawStyle": "line", "fillOpacity": 20 }, "unit": "percentunit", "max": 1 }, "overrides": [] },
+      "targets": [{
+        "refId": "A",
+        "type": "json",
+        "source": "url",
+        "parser": "backend",
+        "format": "timeseries",
+        "url": "http://127.0.0.1:4318/api/series?metric=commits&bucket=week&since=${__from:date:iso}&until=${__to:date:iso}",
+        "root_selector": "rows",
+        "columns": [
+          { "selector": "t", "text": "time", "type": "timestamp" },
+          { "selector": "ai_share", "text": "ai_share", "type": "number" }
+        ]
+      }]
+    }
+  ]
+}
