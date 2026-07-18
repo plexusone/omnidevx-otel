@@ -17,8 +17,8 @@
 
 - [x] `server/`: `/api/health`, `/api/series` (tokens, cost, activity,
   commits; day/week buckets; since/until; mode filter).
-- [ ] Unit tests against a fixture store; week-boundary bucket math.
-  (Verified live against the real store; unit tests still owed.)
+- [x] Unit tests against a fixture store; week-boundary bucket math
+  (2026-07-18, alongside live verification against the real store).
 - [x] Real-store verification: tokens/day and weekly ai_share sane.
 
 ## Phase 3 — Grafana — DONE 2026-07-16 (except PRISM panel)
