@@ -1,10 +1,31 @@
-# omnidevx-otel
+# OmniDevX-oTel
 
-The **OmniDevX local telemetry plane**: a loopback daemon that ingests
-OpenTelemetry metrics from AI coding agents (Claude Code, Codex CLI) into
-the canonical [OmniDevX](https://github.com/plexusone/omnidevx-core) event
-store, serves a read-only query API over it, and ships provisioned Grafana
-dashboards.
+[![Go CI][go-ci-svg]][go-ci-url]
+[![Go Lint][go-lint-svg]][go-lint-url]
+[![Go SAST][go-sast-svg]][go-sast-url]
+[![Go Report Card][goreport-svg]][goreport-url]
+[![Docs][docs-godoc-svg]][docs-godoc-url]
+[![Visualization][viz-svg]][viz-url]
+[![License][license-svg]][license-url]
+
+ [go-ci-svg]: https://github.com/plexusone/omnidevx-otel/actions/workflows/go-ci.yaml/badge.svg?branch=main
+ [go-ci-url]: https://github.com/plexusone/omnidevx-otel/actions/workflows/go-ci.yaml
+ [go-lint-svg]: https://github.com/plexusone/omnidevx-otel/actions/workflows/go-lint.yaml/badge.svg?branch=main
+ [go-lint-url]: https://github.com/plexusone/omnidevx-otel/actions/workflows/go-lint.yaml
+ [go-sast-svg]: https://github.com/plexusone/omnidevx-otel/actions/workflows/go-sast-codeql.yaml/badge.svg?branch=main
+ [go-sast-url]: https://github.com/plexusone/omnidevx-otel/actions/workflows/go-sast-codeql.yaml
+ [goreport-svg]: https://goreportcard.com/badge/github.com/plexusone/omnidevx-otel
+ [goreport-url]: https://goreportcard.com/report/github.com/plexusone/omnidevx-otel
+ [docs-godoc-svg]: https://pkg.go.dev/badge/github.com/plexusone/omnidevx-otel
+ [docs-godoc-url]: https://pkg.go.dev/github.com/plexusone/omnidevx-otel
+ [docs-mkdoc-svg]: https://img.shields.io/badge/docs-guide-blue.svg
+ [docs-mkdoc-url]: https://plexusone.github.io/omnidevx-otel
+ [viz-svg]: https://img.shields.io/badge/repo-visualization-blue.svg
+ [viz-url]: https://mango-dune-07a8b7110.1.azurestaticapps.net/?repo=plexusone%2Fomnidevx-otel
+ [license-svg]: https://img.shields.io/badge/license-MIT-blue.svg
+ [license-url]: https://github.com/plexusone/omnidevx-otel/blob/main/LICENSE
+
+The **OmniDevX local telemetry plane**: a loopback daemon that ingests OpenTelemetry metrics from AI coding agents (Claude Code, Codex CLI) into the canonical [OmniDevX](https://github.com/plexusone/omnidevx-core) event store, serves a read-only query API over it, and ships provisioned Grafana dashboards.
 
 ```text
 Claude Code ──OTLP/JSON──┐
@@ -44,21 +65,13 @@ Point Claude Code at it via `~/.claude/settings.json`:
 }
 ```
 
-Only the OTLP **JSON** encoding is supported (stdlib-only by design; no
-protobuf/gRPC dependencies). Log payloads are acknowledged and discarded —
-prompt-bearing bodies are never stored.
+Only the OTLP **JSON** encoding is supported (stdlib-only by design; no protobuf/gRPC dependencies). Log payloads are acknowledged and discarded — prompt-bearing bodies are never stored.
 
-For macOS persistence, run it under launchd (RunAtLoad + KeepAlive) with
-the binary at a stable path.
+For macOS persistence, run it under launchd (RunAtLoad + KeepAlive) with the binary at a stable path.
 
 ## Grafana
 
-Copy `grafana/provisioning/` into your Grafana provisioning directory
-(set the dashboards provider `path` to this repository's
-`grafana/dashboards`, and install the
-`yesoreyeram-infinity-datasource` plugin). The provisioned dashboard
-charts tokens/day, cost/day, session activity, and weekly AI-assisted
-commit share against the query API.
+Copy `grafana/provisioning/` into your Grafana provisioning directory (set the dashboards provider `path` to this repository's `grafana/dashboards`, and install the `yesoreyeram-infinity-datasource` plugin). The provisioned dashboard charts tokens/day, cost/day, session activity, and weekly AI-assisted commit share against the query API.
 
 ## Specs
 
